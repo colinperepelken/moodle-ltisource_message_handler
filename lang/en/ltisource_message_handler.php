@@ -23,3 +23,4 @@
  */
 
 $string['pluginname'] = "LTI Message Handler";
+$string['privacy:metadata'] = 'The LTI Message Handler plugin does not store any personal data.';

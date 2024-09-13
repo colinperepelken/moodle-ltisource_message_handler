@@ -14,18 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace ltisource_message_handler\privacy;
+
+use core_privacy\local\metadata\null_provider;
+
 /**
- * Version details.
+ * Privacy provider.
  *
- * @package    ltisource_message_handler
- * @copyright  2019 Colin Perepelken {@link https://wcln.ca}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     ltisource_message_handler
+ * @copyright   2024 Catalyst IT Australia
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+class provider implements null_provider {
 
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->version   = 2020040301; // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2017111300; // Requires this Moodle version.
-$plugin->component = 'ltisource_message_handler'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = 'v2.9';
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason(): string {
+        return 'privacy:metadata';
+    }
+}
