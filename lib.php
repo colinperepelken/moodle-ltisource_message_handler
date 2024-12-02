@@ -41,8 +41,27 @@ defined('MOODLE_INTERNAL') || die();
  * @param  array $requestparams
  */
 function ltisource_message_handler_before_launch($instance, $endpoint, $requestparams) {
-    $devicetype = core_useragent::get_device_type();
-    if (! ($devicetype === core_useragent::DEVICETYPE_MOBILE || $devicetype === core_useragent::DEVICETYPE_TABLET)) {
-        echo '<script>'.file_get_contents('source/message_handler/js/script_injector.js').'</script>';
+    global $CFG;
+
+    if (defined('AJAX_SCRIPT') && AJAX_SCRIPT) {
+        return;
     }
+
+    if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
+        return;
+    }
+
+    $devicetype = core_useragent::get_device_type();
+
+    if ($devicetype === core_useragent::DEVICETYPE_MOBILE) {
+        return;
+    }
+
+    if ($devicetype === core_useragent::DEVICETYPE_TABLET) {
+        return;
+    }
+
+    // This is a hack to inject the script into the page.
+    // Calling js_init_code() does not work here.
+    echo html_writer::script(file_get_contents($CFG->dirroot . '/mod/lti/source/message_handler/js/script_injector.js'));
 }
